@@ -34,7 +34,7 @@ function parse_req(pre_str){
   if(pre_str == undefined){
     return []
   }
-  const reg=/( or )?(\w\w\w\s\d\d\d\d\w?( or )?)+/g;
+  const reg=/(( or )?(\w\w\w\s\d\d\d\d\w?))+/g;
   prereq = pre_str.match(reg)
 
   if(prereq == undefined){
@@ -42,21 +42,9 @@ function parse_req(pre_str){
   }
 
   for(var i = 0; i < prereq.length; i++){
-    prereq[i] = prereq[i].split(" or ");
-
-    for(var j = 0; j < prereq.length; j++){
-
-      if(prereq[i][j] == undefined){
-        break;
-      }
-
-      prereq[i][j] = prereq[i][j].replace(" ","");
-
-      if(j == prereq[i].length - 1 && prereq[i][j] == ''){
-        prereq[i].pop();
-      }
+    prereq[i] = prereq[i].replace(/ or /g, ",");
+    prereq[i] = prereq[i].replace(/ /g,"");
     }
-  }
   return prereq;
 }
 
@@ -85,6 +73,7 @@ function process_course(course_code){
 
   return course
 }
+console.log(process_course("ECH3023"));
 exports.getCourseInfo = async function(req, res) {
     // res.send(await fetchCourses(req.courseCode));
     res.send(get_course(req.params.courseCode));
