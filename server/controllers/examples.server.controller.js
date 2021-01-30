@@ -31,7 +31,9 @@ function get_course(course_code){
 //     return data; // TODO return data[0] ?
 // }
 function parse_req(pre_str){
-
+  if(pre_str == undefined){
+    return []
+  }
   const reg=/( or )?(\w\w\w\s\d\d\d\d\w?( or )?)+/g;
   prereq = pre_str.match(reg)
 
@@ -41,16 +43,20 @@ function parse_req(pre_str){
 
   for(var i = 0; i < prereq.length; i++){
     prereq[i] = prereq[i].split(" or ");
+
     for(var j = 0; j < prereq.length; j++){
-      if(j == prereq[i].length - 1 && prereq[i][j] ==''){
-        prereq[i].pop();
+
+      if(prereq[i][j] == undefined){
         break;
+      }
 
       prereq[i][j] = prereq[i][j].replace(" ","");
+
+      if(j == prereq[i].length - 1 && prereq[i][j] == ''){
+        prereq[i].pop();
       }
     }
   }
-
   return prereq;
 }
 
@@ -58,15 +64,23 @@ function process_course(course_code){
   var course_info = get_course(course_code);
   var course = JSON.parse(course_info.substring(1, course_info.length-1))["COURSES"][0];
 
-  var info = course['prerequisites'].split(";");
-  console.log(parse_req(info[1]));
+  if(course['prerequisites'].includes("Coreq")){
+    var info = course['prerequisites'].split("Coreq:");
+    var coreq = info[1];
+    var prereq = info[0];
+  }
+  else{
+    var prereq = course['prerequisites'];
+    var coreq = "";
+  }
+
   var course = {
     name: course['name'],
     code: course['code'],
     desc: course['description'],
-    credits: parseInt(info[0].match(/\d\d?/g)[0]),
-    prereq: parse_req(info[1]),
-    coreq: parse_req(info[2])
+    credits: course['sections'][0]['credits'],
+    prereq: parse_req(prereq),
+    coreq: parse_req(coreq)
   };
 
   return course
@@ -75,4 +89,4 @@ exports.getCourseInfo = async function(req, res) {
     // res.send(await fetchCourses(req.courseCode));
     res.send(get_course(req.params.courseCode));
 }
-process_course("PHY2048");
+console.log(process_course("MAC2313"));

@@ -9,15 +9,19 @@ function parse_req(pre_str){
 
   for(var i = 0; i < prereq.length; i++){
     prereq[i] = prereq[i].split(" or ");
+
     for(var j = 0; j < prereq.length; j++){
-      if(j == prereq[i].length - 1 && prereq[i][j] ==''){
-        prereq[i].pop();
+
+      if(prereq[i][j] == undefined){
         break;
+      }
 
       prereq[i][j] = prereq[i][j].replace(" ","");
+
+      if(j == prereq[i].length - 1 && prereq[i][j] == ''){
+        prereq[i].pop();
       }
     }
   }
-
   return prereq;
 }
