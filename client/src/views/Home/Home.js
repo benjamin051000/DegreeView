@@ -4,7 +4,7 @@ import * as joint from 'jointjs';
 
 function helloJoint() {
 
-    let graph = new joint.dia.Graph;
+    let graph = new joint.dia.Graph();
 
     let paper = new joint.dia.Paper({
         el: document.getElementById('jointpaper'),
