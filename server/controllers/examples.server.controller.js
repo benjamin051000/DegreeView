@@ -30,22 +30,45 @@ function get_course(course_code){
 
 //     return data; // TODO return data[0] ?
 // }
+function parse_req(pre_str){
+
+  const reg=/( or )?(\w\w\w\s\d\d\d\d\w?( or )?)+/g;
+  prereq = pre_str.match(reg)
+
+  if(prereq == undefined){
+    return []
+  }
+
+  for(var i = 0; i < prereq.length; i++){
+    prereq[i] = prereq[i].split(" or ");
+    for(var j = 0; j < prereq.length; j++){
+      if(j == prereq[i].length - 1 && prereq[i][j] ==''){
+        prereq[i].pop();
+        break;
+
+      prereq[i][j] = prereq[i][j].replace(" ","");
+      }
+    }
+  }
+
+  return prereq;
+}
 
 function process_course(course_code){
   var course_info = get_course(course_code);
   var course = JSON.parse(course_info.substring(1, course_info.length-1))["COURSES"][0];
 
   var info = course['prerequisites'].split(";");
-
+  console.log(parse_req(info[1]));
   var course = {
     name: course['name'],
     code: course['code'],
     desc: course['description'],
     credits: parseInt(info[0].match(/\d\d?/g)[0]),
-    prereq: info[1],
-    coreq: info[2]
+    prereq: parse_req(info[1]),
+    coreq: parse_req(info[2])
   };
-  
+
   return course
 }
 exports.getCourseInfo = async function(req, res) {
