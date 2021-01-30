@@ -110,11 +110,46 @@
       ]
     ]
   },
-  "CE": {
-    "core": [],
+  "GenEngineer": {
+    "core": [
+      [
+        "CHM2045",
+        "CHM2095"
+      ],
+      [
+        "CHM2046",
+        "CHM2096"
+      ],
+      [
+        "MAC2311"
+      ],
+      [
+        "MAC2312"
+      ],
+      [
+        "MAC2313"
+      ],
+      [
+        "MAP2302"
+      ],
+      [
+        "PHY2048"
+      ],
+      [
+        "PHY2049"
+      ],
+      [
+        "ENC3246"
+      ]
+    ],
     "electives": [],
     "required_elective1": 9,
     "required_elective2": 3,
-    "required_elective3": 0
+    "required_elective3": 0,
+    "elective1": [
+      [
+        ""
+      ]
+    ]
   }
 }

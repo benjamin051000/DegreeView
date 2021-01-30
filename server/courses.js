@@ -39,6 +39,8 @@ function build_major(majors, major_str, core_courses, electives){
 }
 
 let chE_core = "ECH4224L, ECH4404L, ECH4714, ECH3023, ECH3103, ECH3203, ECH3223, ECH3264, COT3502, ECH4714, PHY2048L, PHY2049L, CHM2045L, CHM2046L, STA3032, ABE2062 or BSC2010,  EEL3003,  CHM4411, CHM2210, CHM2211, CHM2211L, ECH4123, ECH4824, ECH4504, ECH4403, ECH4403L, ECH4714, ECH4323, ECH4323L, ECH4604, ECH4644 or ECH4913, ECH4934";
-var majors = get_empty_majors(["ChemE", "CE"]);
+let gen_engineering = "CHM2045 or CHM2095, CHM2046 or CHM2096, MAC2311, MAC2312, MAC2313, MAP2302, PHY2048, PHY2049, ENC3246"
+var majors = get_empty_majors(["ChemE", "GenEngineer"]);
 build_major(majors, "ChemE", chE_core, "");
+build_major(majors, "GenEngineer", gen_engineering, "");
 write_majors(majors);
