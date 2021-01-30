@@ -1,22 +1,55 @@
-import React from 'react';
-import logo from '../../assets/logo.svg';
+import React, { useEffect } from 'react';
 import './Home.css';
+import * as joint from 'jointjs';
+
+function helloJoint() {
+
+    let graph = new joint.dia.Graph;
+
+    let paper = new joint.dia.Paper({
+        el: document.getElementById('jointpaper'),
+        model: graph,
+        width: 600,
+        height: 100,
+        gridSize: 1
+    });
+
+
+    let rect = new joint.shapes.standard.Rectangle();
+    rect.position(100, 30);
+    rect.resize(100, 40);
+    rect.attr({
+        body: {
+            fill: 'blue'
+        },
+        label: {
+            text: 'Hello',
+            fill: 'white'
+        }
+    });
+    rect.addTo(graph);
+
+    let rect2 = rect.clone();
+    rect2.translate(300, 0);
+    rect2.attr('label/text', 'World!');
+    rect2.addTo(graph);
+
+    let link = new joint.shapes.standard.Link();
+    link.source(rect);
+    link.target(rect2);
+    link.addTo(graph);
+}
+
 
 function Home() {
+    useEffect(helloJoint, [])
+
     return (
         <div className="App">
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                </a>
+                <div style={{backgroundColor:"gray", paddingTop:"30px", paddingBottom:"30px"}} className="ui container">
+                    <div id="jointpaper"></div>
+                </div>
             </header>
         </div>
     );

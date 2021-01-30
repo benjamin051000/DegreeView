@@ -8,6 +8,7 @@ import Header from "./components/Header/Header"
 const App = () => {
   return (
     <div>
+      
       <Header />
       <Switch>
         <Route exact path="/Home" component={Home} />
