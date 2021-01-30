@@ -1,13 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import './Header.css';
 import twouf from '../../assets/TWOUF.jpg'
 
 
 //Set website header, includes the bar with home 
 const Header = () => {
-
-
     return (
         <div style={{height:"60px", backgroundColor:"rgb(40, 87, 151)", borderBottom:"3px solid rgb(224, 129, 46)"}} className="ui fixed menu">
            
