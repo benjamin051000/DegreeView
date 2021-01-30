@@ -1,0 +1,155 @@
+{
+  "ChemE": {
+    "core": [
+      [
+        "ECH4224L"
+      ],
+      [
+        "ECH4404L"
+      ],
+      [
+        "ECH4714"
+      ],
+      [
+        "ECH3023"
+      ],
+      [
+        "ECH3103"
+      ],
+      [
+        "ECH3203"
+      ],
+      [
+        "ECH3223"
+      ],
+      [
+        "ECH3264"
+      ],
+      [
+        "COT3502"
+      ],
+      [
+        "ECH4714"
+      ],
+      [
+        "PHY2048L"
+      ],
+      [
+        "PHY2049L"
+      ],
+      [
+        "CHM2045L"
+      ],
+      [
+        "CHM2046L"
+      ],
+      [
+        "STA3032"
+      ],
+      [
+        "ABE2062",
+        "BSC2010"
+      ],
+      [
+        " EEL3003"
+      ],
+      [
+        " CHM4411"
+      ],
+      [
+        "CHM2210"
+      ],
+      [
+        "CHM2211"
+      ],
+      [
+        "CHM2211L"
+      ],
+      [
+        "ECH4123"
+      ],
+      [
+        "ECH4824"
+      ],
+      [
+        "ECH4504"
+      ],
+      [
+        "ECH4403"
+      ],
+      [
+        "ECH4403L"
+      ],
+      [
+        "ECH4714"
+      ],
+      [
+        "ECH4323"
+      ],
+      [
+        "ECH4323L"
+      ],
+      [
+        "ECH4604"
+      ],
+      [
+        "ECH4644",
+        "ECH4913"
+      ],
+      [
+        "ECH4934"
+      ]
+    ],
+    "electives": [],
+    "required_elective1": 9,
+    "required_elective2": 3,
+    "required_elective3": 0,
+    "elective1": [
+      [
+        ""
+      ]
+    ]
+  },
+  "GenEngineer": {
+    "core": [
+      [
+        "CHM2045",
+        "CHM2095"
+      ],
+      [
+        "CHM2046",
+        "CHM2096"
+      ],
+      [
+        "MAC2311"
+      ],
+      [
+        "MAC2312"
+      ],
+      [
+        "MAC2313"
+      ],
+      [
+        "MAP2302"
+      ],
+      [
+        "PHY2048"
+      ],
+      [
+        "PHY2049"
+      ],
+      [
+        "ENC3246"
+      ]
+    ],
+    "electives": [],
+    "required_elective1": 9,
+    "required_elective2": 3,
+    "required_elective3": 0,
+    "elective1": [
+      [
+        ""
+      ]
+    ]
+  }
+}
