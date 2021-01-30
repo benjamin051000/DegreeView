@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Home.css';
 import * as joint from 'jointjs';
 
@@ -40,14 +40,30 @@ function helloJoint() {
     link.addTo(graph);
 }
 
+/**
+ * Retrieves course information via the backend API endpoint.
+ * @param {string} courseCode - code of the course (e.g. MAC2312).
+ */
+async function getCourseInfo(courseCode) {
+    const response = await fetch(`/api/getCourseInfo/${courseCode}`);
+    const data = await response.json();
+    // console.log("Data from backend:", data);
+    return data[0]; // ONE.UF returns this in an array.
+}
+
 
 function Home() {
-    useEffect(helloJoint, [])
+    // These run once the Home component has loaded.
+    useEffect(helloJoint, []);
+    const [courseInfo, setCourseInfo] = useState({});
+
+    console.log(courseInfo); // Debug to see courseInfo once it's retrieved.
 
     return (
         <div className="App">
             <header className="App-header">
                 <div style={{backgroundColor:"gray", paddingTop:"30px", paddingBottom:"30px"}} className="ui container">
+                    <button onClick={async () => setCourseInfo(await getCourseInfo('MAC2313'))}>Get sample course data</button>
                     <div id="jointpaper"></div>
                 </div>
             </header>
