@@ -3,19 +3,20 @@ const path = require('path'),
     //mongoose = require('mongoose'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
-    router = require('../routes/examples.server.routes');
+    router = require('../routes/server.routes');
 
-const Firestore = require('@google-cloud/firestore');
+
+// module.exports.db = new Firestore({
+//     projectId: 'swamphacks-2021',
+//     keyFilename: 'server/config/SwampHacks 2021-af160589d296.json',
+// });
+
 
 module.exports.init = () => {
     /* 
         connect to database
         - reference README for db uri
     */
-    const db = new Firestore({
-        projectId: 'YOUR_PROJECT_ID',
-        keyFilename: '/path/to/keyfile.json',
-    });
 
     // mongoose.connect(process.env.DB_URI || require('./config').db.uri, {
     // useNewUrlParser: true
