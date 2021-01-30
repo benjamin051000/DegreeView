@@ -5,13 +5,20 @@ const path = require('path'),
     bodyParser = require('body-parser'),
     router = require('../routes/examples.server.routes');
 
+const Firestore = require('@google-cloud/firestore');
+
 module.exports.init = () => {
     /* 
         connect to database
         - reference README for db uri
     */
+    const db = new Firestore({
+        projectId: 'YOUR_PROJECT_ID',
+        keyFilename: '/path/to/keyfile.json',
+    });
+
     // mongoose.connect(process.env.DB_URI || require('./config').db.uri, {
-        // useNewUrlParser: true
+    // useNewUrlParser: true
     // });
     // mongoose.set('useCreateIndex', true);
     // mongoose.set('useFindAndModify', false);
@@ -33,11 +40,11 @@ module.exports.init = () => {
         app.use(express.static(path.join(__dirname, '../../client/build')));
 
         // Handle React routing, return all requests to React app
-        app.get('*', function(req, res) {
+        app.get('*', function (req, res) {
             res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
         });
     }
 
-    return app
+    return app;
 }
 
