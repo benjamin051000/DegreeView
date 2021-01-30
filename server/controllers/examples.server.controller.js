@@ -89,4 +89,3 @@ exports.getCourseInfo = async function(req, res) {
     // res.send(await fetchCourses(req.courseCode));
     res.send(get_course(req.params.courseCode));
 }
-console.log(process_course("MAC2313"));
