@@ -9,121 +9,37 @@ import ReactFlow, {
 const flowKey = 'example-flow';
 
 const CustomText = () => (
-  <> 
+  <>
     <div>Only connectable with B</div>
   </>
 );
+
 
 const nodeTypes = {
   customtext: CustomText,
 };
 
-const initialElements = [
-  {
-    id: 'horizontal-1',
-    sourcePosition: 'right',
-    targetPosition: 'left',
-    data: { 
-        label: 'Input' 
-      },
-    position: { x: 37.5, y: 40 },
-    style: {
-      background: '#D6D5E6',
-      color: '#333',
-      border: '1px solid #222138',
-    },
-  },
-  {
-    id: 'horizontal-2',
-    sourcePosition: 'right',
-    targetPosition: 'left',
-    data: { label: 'A Node' + '\n' + 'Yeah'},
-    position: { x: 37.5, y: 173 },
-    style: {
-      background: '#D6D5E6',
-      color: '#333',
-      border: '1px solid #222138',
-    },
-  },
-  {
-    id: 'horizontal-3',
-    sourcePosition: 'right',
-    targetPosition: 'left',
-    data: { label: 'Node 3' },
-    position: { x: 37.5, y: 306 },
-    style: {
-      background: '#D6D5E6',
-      color: '#333',
-      border: '1px solid #222138',
-    },
-  },
-  {
-    id: 'horizontal-4',
-    sourcePosition: 'right',
-    targetPosition: 'left',
-    data: { label: 'Node 4' },
-    position: { x: 37.5, y: 439 },
-    style: {
-      background: '#D6D5E6',
-      color: '#333',
-      border: '1px solid #222138',
-    },
-  },
-  
-  {
-    id: 'horizontal-7',
-    sourcePosition: 'right',
-    targetPosition: 'left',
-    data: { label: 'Node 7' },
-    position: { x: 300-37.5, y: 40 },
-    style: {
-      background: '#D6D5E6',
-      color: '#333',
-      border: '1px solid #222138',
-    },
-  },
-  {
-    id: 'horizontal-8',
-    sourcePosition: 'right',
-    targetPosition: 'left',
-    data: { label: 'Node 8' },
-    position: { x: 300-37.5, y: 173 },
-    style: {
-      background: '#D6D5E6',
-      color: '#333',
-      border: '1px solid #222138',
-    },
-  },
-  
-  
-];
-
-const OverviewFlow = () => {
-  const UpdateNodes = (node) =>{
-    onSave();
-    onRestore();
-  }
-
-  const [elements, setElements] = useState(initialElements);
+const OverviewFlow = ({ nodes, setNodes }) => {
   const [rfInstance, setRfInstance] = useState(null);
 
-  const onElementsRemove = (elementsToRemove) =>
-  setElements((els) => removeElements(elementsToRemove, els));
 
-  const onConnect = (params) => setElements((els) => addEdge(params, els));
+  const onElementsRemove = (elementsToRemove) =>
+    setNodes((els) => removeElements(elementsToRemove, els));
+
+  const onConnect = (params) => setNodes((els) => addEdge(params, els));
   const onElementClick = (event, element) => console.log('click', element);
-  const onNodeDragStop = (event, node) => {UpdateNodes(node)};
+  const onNodeDragStop = (event, node) => { UpdateNodes(node) };
 
   const prereqUpdate = (flow) => {
     flow.elements.forEach(element => {
-      if(element.id === 'horizontal-4'){
+      if (element.id === 'ENC3246') {
         flow.elements.push({
-          id:'edge-' + element.id + '-' + 'horizontal-7',
-          source: element.id,
-          target: 'horizontal-7',
+          id: 'edge-' + element.id + '-' + 'MAC2311',
+          source: 'ENC3246',
+          target: 'MAC2311',
           type: 'smoothstep',
           animated: true,
-          arrowHeadType: 'arrowclosed',
+          arrowHeadType: 'arrow',
           style: { stroke: '#435985' }
         })
       }
@@ -165,36 +81,35 @@ const OverviewFlow = () => {
 
   //ON RESTORE
   const onRestore = () => {
-      console.log("in console log 1")
-      const flow = JSON.parse(localStorage.getItem(flowKey));
-      if (flow) {
-        const [x = 0, y = 0] = flow.position;
-        console.log("in console log 2")
-        setElements(flow.elements || []);
-      }
+    console.log("in console log 1")
+    const flow = JSON.parse(localStorage.getItem(flowKey));
+    if (flow) {
+      const [x = 0, y = 0] = flow.position;
+      console.log("in console log 2")
+      setNodes(flow.elements || []);
+    }
   };
 
+  const UpdateNodes = (node) => {
+    onSave();
+    onRestore();
+  }
+
   return (
-    <ReactFlowProvider>
-      <ReactFlow
-        elements={elements}
-        nodesConnectable={false}
-        nodeTypes={nodeTypes}
-        onElementsRemove={onElementsRemove}
-        onConnect={onConnect}
-        onLoad={setRfInstance}
-        snapToGrid={true}
-        paneMoveable={false}
-        snapGrid={[1,1]}
-        onNodeDragStop={onNodeDragStop}
-        onElementClick={onElementClick}
-        deleteKeyCode={46}
-        style={{backgroundColor:"#c0c4cf"}}
-        snapGrid={[225,133]}
-      >
-      
-      </ReactFlow>
-    </ReactFlowProvider>
+    <ReactFlow
+      elements={nodes}
+      nodesConnectable={false}
+      onElementsRemove={onElementsRemove}
+      onConnect={onConnect}
+      onLoad={setRfInstance}
+      snapToGrid={true}
+      snapGrid={[225, 133]}
+      paneMoveable={false}
+      onNodeDragStop={onNodeDragStop}
+      onElementClick={onElementClick}
+      deleteKeyCode={46}
+      style={{ backgroundColor: "#c0c4cf" }}
+    />
   );
 };
 
