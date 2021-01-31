@@ -4,6 +4,8 @@ import Home from "./views/Home/Home"
 import NotFound from "./views/NotFound"
 import Header from "./components/Header/Header"
 
+import 'semantic-ui-css/semantic.min.css'
+
 
 const App = () => {
   return (
