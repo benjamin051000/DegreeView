@@ -2,7 +2,7 @@ import path from 'path';
 import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
-import router from '../routes/server.routes.js';
+import router from '../routes/routes.js';
 
 export default function() {
     // initialize app
