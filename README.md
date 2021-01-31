@@ -1,79 +1,44 @@
-##_**DISCLAIMER**_
-This project has moved maintainers and is no longer developed here. The up to date template can be found [here](https://github.com/rennemannd/MERN-Template).
+# TwoDotUF
+**Swamphacks 2021 project** by Austin Welch, John Shoemaker, Joshua Haddad, and Benjamin Wheeler
 
-#### _**IMPORTANT NOTE**_ - 
-This project does not have a mongoDB connection setup. Setup the connection based on the environments below.
-- local development: create a config file (make sure to name it config.js) in the config folder, which exports your db.uri connection. An example is provided, config/config.example.js. This file will be ignored by git so your db credentials will be kept safe when the app is deployed.
-- production: Since the config file is not pushed when you deploy your app, you must specifiy your db uri in heorku. Set the uri in heroku as specified in [this](https://devcenter.heroku.com/articles/config-vars) resource. Make sure you name the environement variable "DB_URI".
+See the Wiki page for instructions on running the project.
 
-## Getting Started
-This repository aims to assist you in beginning work on a MERN stack application with a solid file structure as a foundation. To get started make a copy of this template repo for your project teams.
+# About TwoDotUF
 
-Since this project will hold both the client application and the server application there will be node modules in two different places. First run `npm install` from the root. After this you will run `npm run-script install-all` from the root. From now on run this command anytime you want to install all modules again. This is a script we have defined in package.json .
+## Inspiration
+Our inspiration comes from the **amazing** website [Registr-UF](http://www.registr-uf.com/), which is a campus-renowned tool for planning your schedule each semester. It allows students to easily type in courses they plan to take, and instantly see weekly schedules, allowing them to plan out their weeks in the upcoming semester. We wanted to expand on this website and encompass a larger scope: Your entire degree audit. It can be really difficult understanding where you stand in your degree, which courses you still need to take, and with little help along the way, __seeing the light at the end of the tunnel can be tough!__
 
-This app can be deployed directly to heroku since there is a script defined in package.json which will automatically handle building and deploying the app. For more information on deploying to heroku reference the extra resources at the bottom of this file. 
+## What it does
+**TwoDotUF is a single-page application prototype which displays a form of a degree audit in a flowchart representation.** The website is designed to help make planning your time in college easier: The flowchart **edges automatically route** to show course prerequisite/dependent relationships. Secondly, our behind-the-scenes algorithm **builds your schedule based off of classes you have taken and your major's requirements,** helping you understand what you need to take and when you can take it. Every single object on the page is rearrangeable, allowing you to make a **clean schedule that's dead simple to understand.**
 
-## File structure
-#### `client` - Holds the client application
-- #### `public` - This holds all of our static files
-- #### `src`
-    - #### `assets` - This folder holds assets such as images, docs, and fonts
-    - #### `components` - This folder holds all of the different components that will make up our views
-    - #### `views` - These represent a unique page on the website i.e. Home or About. These are still normal react components.
-    - #### `App.js` - This is what renders all of our browser routes and different views
-    - #### `index.js` - This is what renders the react app by rendering App.js, should not change
-- #### `package.json` - Defines npm behaviors and packages for the client
-#### `server` - Holds the server application
-- #### `config` - This holds our configuration files, like mongoDB uri
-- #### `controllers` - These hold all of the callback functions that each route will call
-- #### `models` - This holds all of our data models
-- #### `routes` - This holds all of our HTTP to URL path associations for each unique url
-- #### `tests` - This holds all of our server tests that we have defined
-- #### `server.js` - Defines npm behaviors and packages for the client
-#### `package.json` - Defines npm behaviors like the scripts defined in the next section of the README
-#### `.gitignore` - Tells git which files to ignore
-#### `README` - This file!
+## How we built it
+TwoDotUF is a full-stack web-application, built with React, Express, NodeJS, and the Google Cloud Firestore database service. In rapid development, libraries became our best friends: We used React Flow for flowcharts and Google service libraries for interfacing with our database, significantly decreasing our development time.
 
+## Challenges we ran into
+We originally tried using JointJS for flowchart creation, but this tool proved to be less than ideal for our goals we had in mind. Due to this issue, we lost several man-hours and had to start over in researching libraries. Secondly, the UF course API gave us lots of trouble with CORS policy issues, forcing us to rewrite some of our API requests, routing them through our backend server rather than using a direct connection.
 
-## Available Scripts
+## Accomplishments that we're proud of
+Seeing the courses pop up on-screen for the first time was awesome. We were so glad our work was finally beginning to pay off! And finally, at nearly 6am in the morning, when the colorful edges magically appeared running through each and nearly every course, we almost exploded with excitement. We had fully realized our vision in less than a day. It was an awesome experience we won't soon forget.
 
-In the project directory, you can run:
+## What we learned
+We learned a lot about full-stack development! Most of what we were comfortable with was some simple JavaScript, maybe a frontend webapp at most. Now, I generally feel much more comfortable with backend development, and understand what it means to be a full-stack application much more.
 
-### `npm run-script dev`
+## What's next for TwoDotUF
+TwoDotUF is in a semi-functional state. We plan on continuing development and publishing this tool to the Gator Nation in the future! Some upcoming features include (but are not limited to):
 
-Runs both the client app and the server app in development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
+* Adding an input form to input your major and classes you've taken
+* Adding pop-up course information (description, prerequisite info, instructor info, and more) when you select a node
+* Adding a feature to automatically re-spec your future courses in case you didn't end up how you planned, giving you insight as to how your graduation and course plans may change
+* Night mode, of course
+* Ability to export your flowchart to send to academic advisors, or keep for your own records
+* Save charts to allow for multiple configurations
+* More algorithms to predict relevant course suggestions to students
+* Polishing the look and feel of the site
 
-### `npm run-script client`
+#Challenges We'd Like to Be Judged For:
+* Swamphacks main event
+* Google Cloud DB Implementation
 
-Runs just the client app in development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
-
-
-### `npm run-script server`
-
-Runs just the server in development mode.<br>
-
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-If deploying to heroku this does not need to be run since it is handled by the heroku-postbuild script<br>
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn how to setup a local MongoDB instance for testing, check out how to [Connect to MongoDB](https://docs.mongodb.com/guides/server/drivers/).
-
-To learn how to deploy a full-stack web app to heroku, check out [this great guide](https://daveceddia.com/deploy-react-express-app-heroku/).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+#Team Leader Slack Info
+* Leader: Benjamin Wheeler (Display name Benjamin W)
+* Backup:  Joshua Haddad  (in case ben fell asleep :p)
