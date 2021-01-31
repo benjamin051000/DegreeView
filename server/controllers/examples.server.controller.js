@@ -153,7 +153,7 @@ function check_coreq(eligible, taken){
   return eligible_courses
 }
 function build_semester(required, taken){
-  
+
   var semester = []
   var eligible = get_eligible_courses(required, taken)
   var eligible = check_coreq(eligible, taken)
@@ -210,7 +210,7 @@ exports.getCourseInfo = async function(req, res) {
     res.send(get_course(req.params.courseCode));
 }
 //console.log(process_course("PHY2048"))
-majors = {
+/*majors = {
   "ChemE": {
     "core": [
       "ECH4224L",
@@ -419,5 +419,5 @@ majors = {
       ""
     ]
   }
-}
-full_schedule(majors['ChemE'], majors["GenEngineer"], ["PHY2020", "CHM1025", "ENC1101", "ENC1102", "MAC1147", "MAC1114"])
+}*/
+//full_schedule(majors['ChemE'], majors["GenEngineer"], ["PHY2020", "CHM1025", "ENC1101", "ENC1102", "MAC1147", "MAC1114"])
