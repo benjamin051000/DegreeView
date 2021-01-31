@@ -2,6 +2,7 @@
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const Firestore = require('@google-cloud/firestore').Firestore;
 
+// TODO duplicate of getCourseInfo
 function get_course(course_code) {
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.open("GET", "https://one.ufl.edu/apix/soc/schedule/?category=CWSP&term=2211&course_code&course-code=" + course_code, false); // false for synchronous request
@@ -169,7 +170,7 @@ function full_schedule(major, general, taken) {
     remove_req(required, taken[i]);
   }
 
-  for (zz = 0; zz < 9; zz++) {
+  for (var zz = 0; zz < 9; zz++) {
     var semester = build_semester(required, taken)
     console.log("Semester " + (zz + 1))
     for (var i = 0; i < semester.length; i++) {
@@ -185,6 +186,30 @@ function remove_req(req, course) {
       return
     }
   }
+}
+
+/**
+ * 
+ * @param {array} majorReqs - your major requirements
+ * @param {array} genReqs - general engineering requirements
+ */
+exports.flow = function(majorReqs, genReqs, takenClasses = ["PHY2020", "CHM1025", "ENC1101", "ENC1102", "MAC1147", "MAC1114"]) {
+  // TODO These are just placeholders for now 
+
+  let reqs = [];
+
+  for(let e in majorReqs) {
+    reqs.push(process_course(e));
+  }
+
+  for(let e in genReqs) {
+    reqs.push(process_course(e));
+  }
+
+  // courses array is done
+
+  let semester = build_semester(reqs, takenClasses);
+  return semester;
 }
 
 /**
