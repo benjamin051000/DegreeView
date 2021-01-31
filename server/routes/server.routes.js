@@ -10,10 +10,11 @@ router.route('/testDB')
 .get(controller.testDB);
 
 router.route('/getReqs/:major')
-.get(controller.getReqs);
+.get(controller.retrieveRequirements);
 
 router.route('/buildsemester/:major')
 .post(controller.build_semester);
+
 
 
 module.exports = router;

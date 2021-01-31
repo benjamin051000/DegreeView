@@ -188,19 +188,8 @@ function remove_req(req, course) {
   }
 }
 
-/**
- * 
- * @param {string} majorReqs - your major (in the format of the database doc name)
- * @param {array} takenClasses - the course codes you've taken already.
- */
-const runFlow = async function (major, takenClasses = ["PHY2020", "CHM1025", "ENC1101", "ENC1102", "MAC1147", "MAC1114"]) {
-  // TODO These are just placeholders for now 
-
-  console.log(`>>>\tRunning flow with major: "${major}" and taken classes:`, takenClasses);
-
-  // Get major requirements
-  // const majorReqs = db.collection('majors').doc(major);
-  // const genReqs = db.collection('majors').doc('GenEngineer');
+exports.retrieveRequirements = async function (req, res) {
+  const major = req.params.major;
 
   // get all the requirements from the database 
   let majorReqs, genReqs;
@@ -250,9 +239,21 @@ const runFlow = async function (major, takenClasses = ["PHY2020", "CHM1025", "EN
     reqs.push(process_course(e));
   }
 
-  // console.log('>>>\treqs:', reqs);
+  res.send(reqs);
+}
 
-  // courses array is done.
+
+/**
+ * 
+ * @param {string} majorReqs - your major (in the format of the database doc name)
+ * @param {array} takenClasses - the course codes you've taken already.
+ */
+const runFlow = function (major, takenClasses, reqs) {
+  // TODO These are just placeholders for now 
+
+  console.log(`>>>\tRunning flow with major: "${major}" and taken classes:`, takenClasses);
+  console.log('Requirements received:', reqs);
+
   console.log('Building semester...');
 
   let semester = __build_semester(reqs, takenClasses);
@@ -266,15 +267,14 @@ const runFlow = async function (major, takenClasses = ["PHY2020", "CHM1025", "EN
 
 exports.build_semester = function (req, res) {
   let major = req.params.major;
-  let takenClasses = req.body;
+  let { takenClasses, majorReqs } = req.body;
 
   // Run the flow
-  runFlow(major, takenClasses).then(results => {
-    console.log('============================================')
-    console.log('results:', results);
+  let results = runFlow(major, takenClasses, majorReqs);
+  console.log('============================================')
+  console.log('results:', results);
 
-    res.send(results);
-  });
+  res.send(results);
 }
 
 /**
@@ -317,8 +317,9 @@ exports.testDB = async function (req, res) {
 
 /**
  * Gets a major document from the database.
+ * TODO Unused at the moment
  */
-exports.getReqs = async function (req, res) {
+const getReqs = async function (req, res) {
   const major = req.params.major;
   const doc = db.collection('majors').doc(major);
   const courseData = await doc.get();
