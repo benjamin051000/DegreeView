@@ -123,13 +123,29 @@ const fsPromises = require('fs').promises; // used for promise .then's
 const addData = async function () {
   let data = await fs.promises.readFile('./server/majors.json');
   let json = await JSON.parse(data);
+
+    console.log(json)
   
-  // console.log(json);
-  
-  let major = '';
-  const db_res = db.collection('majors').doc('test').set({
-    'example': 'hello'
-  });
+    for (var majorName in json) {
+     // console.log(majorName);
+
+       let coreClasses = json[majorName]["core"];
+      // let electives = json[majorName]["electives"];
+      // let required_elective1 = json[majorName]["required_elective1"];
+      // let required_elective2 = json[majorName]["required_elective2"];
+      // let required_elective3 = json[majorName]["required_elective3"];
+      // let required_elective3 = json[majorName]["required_elective3"];
+
+    for(var index in coreClasses){
+      //console.log(coreClasses[index]);
+      let classNumber = coreClasses[index];
+      // const db_res = db.collection('majors').doc(majorName).set({
+      //   'core': classNumber
+     // });
+    }
+  }
+
+   const db_res = await db.collection('majors').doc('bruh').set({'core': 'bruh'});
   
   /**
    * if(err) {console.log(err);}
