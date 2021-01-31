@@ -34,6 +34,7 @@ function parse_req(pre_str){
   if(pre_str == undefined){
     return []
   }
+
   const reg=/(( or )?([A-Z][A-Z][A-Z]\s\d\d\d\d\w?))+/g;
   prereq = pre_str.match(reg)
 
@@ -205,6 +206,7 @@ function remove_req(req, course){
     }
   }
 }
+
 exports.getCourseInfo = async function(req, res) {
     // res.send(await fetchCourses(req.courseCode));
     res.send(get_course(req.params.courseCode));
