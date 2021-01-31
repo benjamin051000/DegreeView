@@ -14,6 +14,14 @@ const CustomText = () => (
   </>
 );
 
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
 
 const nodeTypes = {
   customtext: CustomText,
@@ -40,6 +48,9 @@ const OverviewFlow = ({ nodes, setNodes }) => {
         if (tar.data)
           for (let prereq of tar.data.prereqs) {
             if (!tar.id.startsWith('edge') && (src.id === prereq || prereq.split(',').includes(src.id))) {
+
+              let first_letter = src.id.charAt(0);
+
               flow.elements.push({
                 id: 'edge-' + src.id + '-' + tar.id,
                 source: src.id,
@@ -47,7 +58,7 @@ const OverviewFlow = ({ nodes, setNodes }) => {
                 type: 'smoothstep',
                 animated: true,
                 arrowHeadType: 'arrow',
-                style: { stroke: '#435985' }
+                style: { stroke: getRandomColor() }
               });
               console.log(`Generated edge: ${src.id}-${tar.id}`)
             }
