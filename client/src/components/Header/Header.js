@@ -1,29 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import './Header.css';
+import twouf from '../../assets/TWOUF.jpg'
+import NewModal from '../NewModal.js';
+import ExportModal from '../ExportModal.js';
 
+//Set website header, includes the bar with home 
 const Header = () => {
     return (
-        <div className='topnav'>
-            {/* Logo */}
-            <Link id="logo-link" to="/">
-                <img className="topnav-logo" src={ "/logo192.png" } alt="React logo" />
-            </Link>
+        <div style={{height:"60px", backgroundColor:"rgb(40, 87, 151)", borderBottom:"3px solid rgb(224, 129, 46)"}} className="ui fixed menu">
+           
+                <div className="ui fluid container">
+                    <a style={{color:"white"}} href="#" className="header item" >
+                    <img style={{marginRight:"20px"}} className="logo" src={twouf} alt="TWODOTUF"/>
+                        TwoDotUF
+                    </a>
+                    <ExportModal className="ui fixed menu"/>
+                    <NewModal className="ui fixed menu"/>
+                </div>
+                
+               
+                
+      
 
-            {/* Page Links */}
-            <div className="topnav-right">
-                <Link className="topnav-link" to='/Register'>Sign in</Link>
-                <Link className="topnav-link" to='/projects'>Projects</Link>
-                <a className="topnav-link" target='_blank' rel="noopener noreferrer" href="https://www.facebook.com/groups/ufosc/events/?source=4&action_history=null&filter=calendar">
-                    Events
-                    <i className="fas fa-external-link-alt external-link" data-fa-transform="up-6"></i>
-                </a>
-                <a className="topnav-link" target='_blank' rel="noopener noreferrer" href="https://github.com/ufosc/club-resources">
-                    Resources
-                    <i className="fas fa-external-link-alt external-link" data-fa-transform="up-6 right-4"></i>
-                </a>
-                <Link className="topnav-link" to="/about">About</Link>
-            </div>
         </div>
     )
 }
