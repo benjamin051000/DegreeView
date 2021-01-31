@@ -23,7 +23,7 @@ async function getCourseInfo(courseCode) {
 async function getSemester(major, takenClasses) {
     const options = {
         method: 'POST',
-        body: JSON.stringify(takenClasses),
+        body: JSON.stringify({takenClasses, majorReqs}),
         headers: { 'Content-Type': 'application/json' }
     }
 
@@ -36,9 +36,27 @@ async function getSemester(major, takenClasses) {
     TODO make a feature where user checks off classes */
     for(let course of data) {
         takenClasses.push(course.code);
+
+        for(let idx = 0; idx < majorReqs.length; idx++) {
+            if(majorReqs[idx].code === course.code) {
+                majorReqs.splice(idx, 1);
+                break;
+            }
+        }
     }
+
     console.log('New takenClasses:', takenClasses);
 
+    return data;
+}
+
+let requirementsLoaded = false;
+let majorReqs = [];
+async function getRequirements(major) {
+    let response = await fetch(`/api/getReqs/${major}`);
+    let data = await response.json();
+    
+    requirementsLoaded = true;
     return data;
 }
 
@@ -70,11 +88,19 @@ let i = 0; // For offsetting semester nodes
 function Home() {
     const [nodes, setNodes] = useState([]);
 
+    if(!requirementsLoaded) {
+        getRequirements('ChemE').then( reqs => {
+            majorReqs = reqs;
+            console.log('Just got the requirements here:', majorReqs);
+        });
+    }
+
     const handleClick = async () => {
         const semester = await getSemester('ChemE', takenClasses);
         console.log('Unedited semester:', semester);
-        let nodes = make_nodes(semester);
-        setNodes(nodes);
+        let newnodes = make_nodes(semester);
+        newnodes.push(...nodes);
+        setNodes(newnodes);
         i++;
     }
 
