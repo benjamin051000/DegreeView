@@ -17,19 +17,13 @@ async function getCourseInfo(courseCode) {
 
 /**
  * Gets all the classes you can take in a semester.
- * @param {string} major 
+ * @param {string} major
+ * @param {array} takenClasses - pass by reference
  */
-async function getSemester(major = 'ChemE') {
+async function getSemester(major, takenClasses) {
     const options = {
         method: 'POST',
-        body: JSON.stringify([
-            "PHY2020",
-            "CHM1025",
-            "ENC1101",
-            "ENC1102",
-            "MAC1147",
-            "MAC1114"
-        ]),
+        body: JSON.stringify(takenClasses),
         headers: { 'Content-Type': 'application/json' }
     }
 
@@ -37,6 +31,14 @@ async function getSemester(major = 'ChemE') {
 
     let response = await fetch(url, options);
     let data = await response.json();
+
+    /* Add everything from data to takenClasses.
+    TODO make a feature where user checks off classes */
+    for(let course of data) {
+        takenClasses.push(course.code);
+    }
+    console.log('New takenClasses:', takenClasses);
+
     return data;
 }
 
@@ -47,7 +49,7 @@ function make_nodes(semester) {
     for (let data of semester) {
         const id = data.code;
         const label = `${id} (${data.credits})`;
-        const pos = { x: 800, y: 400 }; // About centerscreen
+        const pos = { x: 300 + i * 500, y: 400 }; // About centerscreen
 
         nodes.push(makeNode(id, label, pos));
     }
@@ -55,14 +57,25 @@ function make_nodes(semester) {
     return nodes;
 }
 
+let takenClasses = [
+    "PHY2020",
+    "CHM1025",
+    "ENC1101",
+    "ENC1102",
+    "MAC1147",
+    "MAC1114"
+];
+let i = 0; // For offsetting semester nodes
+
 function Home() {
     const [nodes, setNodes] = useState([]);
 
     const handleClick = async () => {
-        let semester = await getSemester();
+        const semester = await getSemester('ChemE', takenClasses);
         console.log('Unedited semester:', semester);
         let nodes = make_nodes(semester);
         setNodes(nodes);
+        i++;
     }
 
     return (
@@ -78,8 +91,8 @@ function Home() {
                     <div className="item" style={{ color: "#4a4e4e", paddingTop: "16px" }}>Fall 2022</div>
                     <div className="item" style={{ color: "#4a4e4e", paddingTop: "16px" }}>Spring 2023</div>
                     <div className="item" style={{ color: "#4a4e4e", paddingTop: "16px" }}>Summer 2023</div>
-
                 </div>
+                <button onClick={handleClick}>Build sem</button>
                 <CourseSidebar>
                     <div style={{ className: "ui container", width: "1800px", height: "800px" }}>
                         <OverviewFlow nodes={nodes} setNodes={setNodes} />
@@ -87,7 +100,6 @@ function Home() {
                 </CourseSidebar>
 
             </header>
-            <button onClick={handleClick}>Build sem</button>
         </div>
     );
 }
