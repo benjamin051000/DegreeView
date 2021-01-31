@@ -1,7 +1,8 @@
-const controller = require('../controllers/server.controller.js'),
-    express = require('express'), 
-    router = express.Router()
-  
+import * as controller from '../controllers/controller.js';
+import express from 'express';
+
+const router = express.Router();
+
 router.route('/getCourseInfo/:courseCode')
 .get(controller.getCourseInfo);
 
@@ -17,4 +18,4 @@ router.route('/buildsemester/:major')
 
 
 
-module.exports = router;
+export default router;

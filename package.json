@@ -22,6 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "@google-cloud/firestore": "^4.9.1",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "concurrently": "^4.1.0",
     "express": "^4.17.1",
@@ -30,8 +31,8 @@
     "morgan": "^1.9.1",
     "nodemon": "^1.18.10",
     "should": "^13.2.3",
-    "supertest": "^4.0.2",
-    "xmlhttprequest": "^1.8.0"
+    "supertest": "^4.0.2"
   },
-  "homepage": "https://github.com/UFWebApps/React_Template_Repo#readme"
+  "homepage": "https://github.com/UFWebApps/React_Template_Repo#readme",
+  "type": "module"
 }

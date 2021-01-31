@@ -1,11 +1,10 @@
-const path = require('path'),
-    express = require('express'),
-    morgan = require('morgan'),
-    bodyParser = require('body-parser'),
-    router = require('../routes/server.routes');
+import path from 'path';
+import express from 'express';
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
+import router from '../routes/server.routes.js';
 
-
-module.exports.init = () => {
+export default function() {
     // initialize app
     const app = express();
 
