@@ -134,7 +134,7 @@ function check_coreq(eligible, taken) {
 
   return eligible_courses
 }
-function build_semester(required, taken) {
+function __build_semester(required, taken) {
 
   var semester = []
   var eligible = get_eligible_courses(required, taken)
@@ -190,26 +190,91 @@ function remove_req(req, course) {
 
 /**
  * 
- * @param {array} majorReqs - your major requirements
- * @param {array} genReqs - general engineering requirements
+ * @param {string} majorReqs - your major (in the format of the database doc name)
+ * @param {array} takenClasses - the course codes you've taken already.
  */
-exports.flow = function(majorReqs, genReqs, takenClasses = ["PHY2020", "CHM1025", "ENC1101", "ENC1102", "MAC1147", "MAC1114"]) {
+const runFlow = async function (major, takenClasses = ["PHY2020", "CHM1025", "ENC1101", "ENC1102", "MAC1147", "MAC1114"]) {
   // TODO These are just placeholders for now 
 
+  console.log(`>>>\tRunning flow with major: "${major}" and taken classes:`, takenClasses);
+
+  // Get major requirements
+  // const majorReqs = db.collection('majors').doc(major);
+  // const genReqs = db.collection('majors').doc('GenEngineer');
+
+  // get all the requirements from the database 
+  let majorReqs, genReqs;
+
+  let doc = db.collection('majors').doc(major);
+  let courseData = await doc.get();
+
+  if (!courseData.exists) {
+    console.log(`ERROR: ${major} does not exist in the DB.`);
+  }
+  else {
+    // Format as an array
+    let arr = courseData['_fieldsProto']['core']['arrayValue']['values'];
+    arr = arr.map(e => e['stringValue']);
+    console.log(arr);
+    majorReqs = arr;
+  }
+
+  // Do the same for general engineering reqs
+
+  doc = db.collection('majors').doc('GenEngineer');
+  courseData = await doc.get();
+
+  if (!courseData.exists) {
+    console.log(`ERROR: ${major} does not exist in the DB.`);
+  }
+  else {
+    // Format as an array
+    let arr = courseData['_fieldsProto']['core']['arrayValue']['values'];
+    arr = arr.map(e => e['stringValue']);
+    console.log(arr);
+    genReqs = arr;
+  }
+
+  console.log('>>>\tmajorReqs:', majorReqs);
+  console.log('>>>\tgenReqs:', genReqs);
+
+  // put them into one array.
   let reqs = [];
-
-  for(let e in majorReqs) {
+  for (let e of majorReqs) {
+    console.log('Processing course:', e);
     reqs.push(process_course(e));
   }
 
-  for(let e in genReqs) {
+  for (let e of genReqs) {
+    console.log('Processing course:', e);
     reqs.push(process_course(e));
   }
 
-  // courses array is done
+  // console.log('>>>\treqs:', reqs);
 
-  let semester = build_semester(reqs, takenClasses);
+  // courses array is done.
+  console.log('Building semester...');
+
+  let semester = __build_semester(reqs, takenClasses);
+
+  console.log('Semester built.');
+
+  // console.log('>>>\tSemester:', semester);
+
   return semester;
+}
+
+exports.build_semester = function (req, res) {
+  let major = req.params.major;
+  let takenClasses = req.body;
+
+  // Run the flow
+  runFlow(major, takenClasses).then(results => {
+    console.log('============================================')
+    console.log('results:', results);
+
+    res.send(results);
+  });
 }
 
 /**
@@ -237,7 +302,7 @@ const db = new Firestore({
  */
 exports.testDB = async function (req, res) {
 
-  let major = 'Chemical Engineer';
+  let major = 'ChemE';
   const doc = db.collection('majors').doc(major);
   const info = await doc.get();
 
@@ -281,11 +346,11 @@ const fsPromises = require('fs').promises;
 const addData = async function () {
   let data = await fs.promises.readFile('./server/majors.json');
   let json = await JSON.parse(data);
-  
+
   for (var majorName in json) {
-      let courses = json[majorName]["core"];
-      console.log(courses);
-      const db_res = db.collection('majors').doc(majorName).set({ "core": courses });
+    let courses = json[majorName]["core"];
+    console.log(courses);
+    const db_res = db.collection('majors').doc(majorName).set({ "core": courses });
   }
 }
 // TODO remove, this is just a helper function to add stuff to DB
