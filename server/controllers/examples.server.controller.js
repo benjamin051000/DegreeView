@@ -153,7 +153,7 @@ function check_coreq(eligible, taken){
   return eligible_courses
 }
 function build_semester(required, taken){
-  //Get all classes that the student have prereqs for
+  
   var semester = []
   var eligible = get_eligible_courses(required, taken)
   var eligible = check_coreq(eligible, taken)
