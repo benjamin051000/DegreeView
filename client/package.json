@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "jointjs": "^3.3.0",
+    "localforage": "^1.9.0",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
     "react-flow-renderer": "^8.7.0",

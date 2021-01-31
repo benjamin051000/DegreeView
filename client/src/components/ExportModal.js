@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Header, Modal } from 'semantic-ui-react'
+import { Button, Header, Modal, Form} from 'semantic-ui-react'
 
 function ExportModal() {
   const [open, setOpen] = React.useState(false)
@@ -18,7 +18,19 @@ function ExportModal() {
           <p>
             If you want to add your name and UFID to your semester plan, you may do so here:
           </p>
-          <p>These boxes may be left blank if desired</p>
+          <Form>
+            <Form.Input
+                id='name'
+                label='Name'
+                placeholder='Name'
+            />
+            <Form.Input
+                id='UFID'
+                label='UFID'
+                placeholder='UFID'
+            />
+          </Form>
+          <p style={{marginTop:"15px"}}>These boxes may be left blank if desired</p>
         </Modal.Description>
       </Modal.Content>
       <Modal.Actions>
@@ -26,6 +38,7 @@ function ExportModal() {
           Cancel
         </Button>
         <Button
+          type='submit'
           content="Export to PDF"
           labelPosition='right'
           icon='checkmark'
