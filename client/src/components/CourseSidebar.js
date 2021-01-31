@@ -10,7 +10,6 @@ export default function CourseSidebar({ courseCode, children }) {
 
   return (
     <>
-    <button onClick={() => {setVisible(!visible)}}>Toggle sidebar</button>
     <Sidebar.Pushable as={Segment}>
       <Sidebar
         as={Menu}
@@ -31,6 +30,7 @@ export default function CourseSidebar({ courseCode, children }) {
         {children}
       </Sidebar.Pusher>
     </Sidebar.Pushable>
+    {/* <button onClick={() => {setVisible(!visible)}}>Toggle sidebar</button> */}
     </>
   );
 }

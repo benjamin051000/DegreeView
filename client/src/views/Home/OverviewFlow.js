@@ -28,21 +28,31 @@ const OverviewFlow = ({ nodes, setNodes }) => {
 
   const onConnect = (params) => setNodes((els) => addEdge(params, els));
   const onElementClick = (event, element) => console.log('click', element);
-  const onNodeDragStop = (event, node) => { UpdateNodes(node) };
+  const onNodeDragStop = (event, node) => { UpdateNodes(node); console.log("Drag stop:", node.position) };
 
   const prereqUpdate = (flow) => {
-    flow.elements.forEach(element => {
-      if (element.id === 'ENC3246') {
-        flow.elements.push({
-          id: 'edge-' + element.id + '-' + 'MAC2311',
-          source: 'ENC3246',
-          target: 'MAC2311',
-          type: 'smoothstep',
-          animated: true,
-          arrowHeadType: 'arrow',
-          style: { stroke: '#435985' }
-        })
-      }
+    flow.elements.forEach(src => {
+      console.log("source:", src);
+      for (let tar of flow.elements) {
+        console.log("target:", tar);
+
+        // if (element.prereq && element.prereq.includes(t.code)) {
+        if (tar.data)
+          for (let prereq of tar.data.prereqs) {
+            if (!tar.id.startsWith('edge') && (src.id === prereq || prereq.split(',').includes(src.id))) {
+              flow.elements.push({
+                id: 'edge-' + src.id + '-' + tar.id,
+                source: src.id,
+                target: tar.id,
+                type: 'smoothstep',
+                animated: true,
+                arrowHeadType: 'arrow',
+                style: { stroke: '#435985' }
+              });
+              console.log(`Generated edge: ${src.id}-${tar.id}`)
+            }
+          } // end if
+      } // end for
     });
     console.log(flow.elements)
     return flow;

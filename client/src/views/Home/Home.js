@@ -60,16 +60,17 @@ async function getRequirements(major) {
     return data;
 }
 
+let i = 0; // For offsetting semester nodes
 function make_nodes(semester) {
 
     let nodes = [];
 
-    for (let data of semester) {
-        const id = data.code;
-        const label = `${id} (${data.credits})`;
-        const pos = { x: 300 + i * 500, y: 400 }; // About centerscreen
+    let j = 0;
 
-        nodes.push(makeNode(id, label, pos));
+    for (let data of semester) {
+        const pos = { x: 40 + i * 225, y: 5 + 133/2 * j }; // About centerscreen
+        nodes.push(makeNode(data, pos));
+        j++;
     }
 
     return nodes;
@@ -83,7 +84,7 @@ let takenClasses = [
     "MAC1147",
     "MAC1114"
 ];
-let i = 0; // For offsetting semester nodes
+
 
 function Home() {
     const [nodes, setNodes] = useState([]);
@@ -118,12 +119,13 @@ function Home() {
                     <div className="item" style={{ color: "#4a4e4e", paddingTop: "16px" }}>Spring 2023</div>
                     <div className="item" style={{ color: "#4a4e4e", paddingTop: "16px" }}>Summer 2023</div>
                 </div>
-                <button onClick={handleClick}>Build sem</button>
+                
                 <CourseSidebar>
                     <div style={{ className: "ui container", width: "1800px", height: "800px" }}>
                         <OverviewFlow nodes={nodes} setNodes={setNodes} />
                     </div>
                 </CourseSidebar>
+                <button onClick={handleClick}>Build Semester</button>
 
             </header>
         </div>

@@ -1,17 +1,27 @@
 
 /**
  * Constructs nodes in the flowchart library.
- * @param {string} id - course code
- * @param {string} label
- * @param {object} position - {x: int, y: int}, canvas position
+ * @param {object} course 
+ * @param {object} position 
  */
-function makeNode(id, label, position) {
+function makeNode(course, position) {
+    const id = course.code;
+    const label = `${id} (${course.credits} cred.)`;
+    const prereqs = course.prereq;
+    const coreqs = course.coreq;
+    const desc = course.desc;
+
     return {
         id: id,
         sourcePosition: 'right',
         targetPosition: 'left',
-        data: {label: label},
-        position: position
+        data: {
+            label: label,
+            prereqs: prereqs,
+            coreqs: coreqs,
+            desc: desc
+        },
+        position: position,
     };
 }
 
