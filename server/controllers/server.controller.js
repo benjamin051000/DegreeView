@@ -64,6 +64,7 @@ function process_course(course_code) {
  * Obtains information about a particular course.
  */
 exports.getCourseInfo = function (req, res) {
+  let course_code = req.params.courseCode;
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.open("GET", "https://one.ufl.edu/apix/soc/schedule/?category=CWSP&term=2211&course_code&course-code=" + course_code, false); // false for synchronous request
   xmlHttp.send(null);
