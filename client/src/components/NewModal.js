@@ -15,13 +15,12 @@ function NewModal() {
     >
       <Header icon>
         <Icon name='file outline' />
-        Create New Planner
+        <Header.Content>
+          Create New Planner
+          <Header.Subheader style={{color:"white"}}>Are you sure you want to restart?</Header.Subheader>
+        </Header.Content>
       </Header>
-      <Modal.Content>
-        <p>
-          Are you sure you want to restart?
-        </p>
-      </Modal.Content>
+      
       <Modal.Actions>
         <Button basic color='red' inverted onClick={() => setOpen(false)}>
           <Icon name='remove' /> No

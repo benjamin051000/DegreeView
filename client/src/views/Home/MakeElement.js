@@ -9,6 +9,7 @@ function makeNode(id, label, position) {
     return {
         id: id,
         sourcePosition: 'right',
+        targetPosition: 'left',
         data: {label: label},
         position: position
     };

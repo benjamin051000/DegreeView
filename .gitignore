@@ -54,6 +54,7 @@ yarn-error.log*
 
 # User-specific stuff
 .idea/*
+client/.vscode/launch.json
 
 # Private key
 server/config/SwampHacks 2021-af160589d296.json

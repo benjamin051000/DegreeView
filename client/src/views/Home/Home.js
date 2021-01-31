@@ -19,7 +19,7 @@ async function getCourseInfo(courseCode) {
  * Gets all the classes you can take in a semester.
  * @param {string} major 
  */
-async function getSemester(major='ChemE') {
+async function getSemester(major = 'ChemE') {
     const options = {
         method: 'POST',
         body: JSON.stringify([
@@ -30,11 +30,11 @@ async function getSemester(major='ChemE') {
             "MAC1147",
             "MAC1114"
         ]),
-        headers: {'Content-Type': 'application/json'}
+        headers: { 'Content-Type': 'application/json' }
     }
 
     const url = `/api/buildsemester/${major}`;
-    
+
     let response = await fetch(url, options);
     let data = await response.json();
     return data;
@@ -44,10 +44,10 @@ function make_nodes(semester) {
 
     let nodes = [];
 
-    for(let data of semester) {
+    for (let data of semester) {
         const id = data.code;
         const label = `${id} (${data.credits})`;
-        const pos = {x:800, y:400}; // About centerscreen
+        const pos = { x: 800, y: 400 }; // About centerscreen
 
         nodes.push(makeNode(id, label, pos));
     }
@@ -64,17 +64,28 @@ function Home() {
         let nodes = make_nodes(semester);
         setNodes(nodes);
     }
-    
+
     return (
         <div className="App">
             <header className="App-header">
+
+                <div style={{ fontFamily: "Lato,'Helvetica Neue', Arial, Helvetica, sans-serif", fontWeight: "700", fontSize: "15pt", backgroundColor: "#c0c4cf", marginTop: "60px", width: "1800px", textAlign: "center", borderRadius: "0px 0px 0px 0px" }} className="ui eight item menu">
+                    <div className="item" style={{ color: "#4a4e4e", paddingTop: "16px", textAlign: "center" }}>Spring 2021</div>
+                    <div className="item" style={{ color: "#4a4e4e", paddingTop: "16px" }}>Summer 2021</div>
+                    <div className="item" style={{ color: "#4a4e4e", paddingTop: "16px" }}>Fall 2021</div>
+                    <div className="item" style={{ color: "#4a4e4e", paddingTop: "16px" }}>Spring 2022</div>
+                    <div className="item" style={{ color: "#4a4e4e", paddingTop: "16px" }}>Summer 2022</div>
+                    <div className="item" style={{ color: "#4a4e4e", paddingTop: "16px" }}>Fall 2022</div>
+                    <div className="item" style={{ color: "#4a4e4e", paddingTop: "16px" }}>Spring 2023</div>
+                    <div className="item" style={{ color: "#4a4e4e", paddingTop: "16px" }}>Summer 2023</div>
+
+                </div>
                 <CourseSidebar>
-                    <div style={{ marginLeft: "100px", marginTop: "100px", className: "ui container", width: "1600px", height: "800px" }}>
-
-                        <OverviewFlow nodes={nodes} setNodes={setNodes}/>
+                    <div style={{ className: "ui container", width: "1800px", height: "800px" }}>
+                        <OverviewFlow nodes={nodes} setNodes={setNodes} />
                     </div>
-
                 </CourseSidebar>
+
             </header>
             <button onClick={handleClick}>Build sem</button>
         </div>
