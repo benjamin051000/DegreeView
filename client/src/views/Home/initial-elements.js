@@ -1,11 +1,11 @@
 import React from 'react';
 export default [
     {
-      id: 'horizontal-1',
+      id: 'MAC2312',
       sourcePosition: 'right',
       className: 'dark-node',
       data: { 
-          label: 'Input' 
+          label: 'MAC2312' 
         },
       position: { x: 0, y: 80 },
     },

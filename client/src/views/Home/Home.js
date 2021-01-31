@@ -1,6 +1,7 @@
 import './Home.css';
-import React from 'react';
+import React, { useState } from 'react';
 import OverviewFlow from './OverviewFlow.js';
+import CourseSidebar from '../../components/CourseSidebar.js';
 
 /**
  * Retrieves course information via the backend API endpoint.
@@ -15,16 +16,17 @@ async function getCourseInfo(courseCode) {
 
 
 function Home() {
+    const [courseSidebarData, setSideBar] = useState({});
     
-
     return (
         <div className="App">
             <header className="App-header">
-                <div></div>
-                <div style={{marginLeft:"100px", marginTop:"100px", className:"ui container", width:"1600px", height:"800px"}}>
-                    <OverviewFlow/>
-                    
-                </div>
+                {/* <div></div> */}
+                <CourseSidebar>
+                    <div style={{ marginLeft: "100px", marginTop: "100px", className: "ui container", width: "1600px", height: "800px" }}>
+                        <OverviewFlow />
+                    </div>
+                </CourseSidebar>
             </header>
         </div>
     );
