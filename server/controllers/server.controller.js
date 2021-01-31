@@ -114,9 +114,35 @@ exports.getReqs = async function (req, res) {
   }
 }
 
-exports.addData = async function (req, res) {
-  let data = req.body;
-  let major = ''; // TODO is this correct?
-  const db_res = await db.collection('majors').doc(major).set(data);
-  res.send(db_res);
+/**
+ * Helper function that adds a major's 
+ * requirements to the database.
+ */
+const fs = require('fs');
+const fsPromises = require('fs').promises; // used for promise .then's
+const addData = async function () {
+  let data = await fs.promises.readFile('./server/majors.json');
+  let json = await JSON.parse(data);
+  
+  // console.log(json);
+  
+  let major = '';
+  const db_res = db.collection('majors').doc('test').set({
+    'example': 'hello'
+  });
+  
+  /**
+   * if(err) {console.log(err);}
+
+    let json = JSON.parse(data);
+
+    let major = ''; // TODO is this correct?
+    const db_res = db.collection('majors').doc(major).set(data);
+    console.log(db_res);
+
+   */
 }
+
+// TODO remove, this is just a helper function to add stuff to DB
+// and is not part of production
+addData();
