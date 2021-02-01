@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import OverviewFlow from './OverviewFlow.js';
 import CourseSidebar from '../../components/CourseSidebar.js';
 import makeNode from './MakeElement.js';
+import updateNodes from './OverviewFlow.js'
 
 /**
  * Retrieves course information via the backend API endpoint.
@@ -102,7 +103,6 @@ function Home() {
         let newnodes = make_nodes(semester);
         newnodes.push(...nodes);
         setNodes(newnodes);
-        i++;
     }
 
     return (
@@ -125,7 +125,7 @@ function Home() {
                         <OverviewFlow nodes={nodes} setNodes={setNodes} />
                     </div>
                 </CourseSidebar>
-                <button onClick={handleClick}>Build Semester</button>
+                <button style={{backgroundColor:"#c0c4cf", marginTop:"-5px"}} className="ui button" onClick={handleClick}>Build Semester</button>
 
             </header>
         </div>
