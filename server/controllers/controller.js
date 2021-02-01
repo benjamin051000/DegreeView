@@ -3,72 +3,58 @@ import db from '../config/DBConfig.js';
 // import https from 'https';
 import __getCourseInfo from '../functions/GetCourseInfo.js';
 
-import {runFlow, process_course} from '../functions/GetSemester.js';
+import { runFlow, process_course } from '../functions/GetSemester.js';
 
 const retrieveRequirements = async function (req, res) {
-  const major = req.params.major;
+    console.group(); // Indents the following console logs
 
-  // get all the requirements from the database 
-  let majorReqs, genReqs;
+    const major = req.params.major;
 
-  let doc = db.collection('majors').doc(major);
-  let courseData = await doc.get();
+    // get all the requirements from the database
+    let majors = [major, 'GenEngineer']; // For engineering majors
+    let all_reqs = [];
 
-  if (!courseData.exists) {
-    console.log(`ERROR: ${major} does not exist in the DB.`);
-  }
-  else {
-    // Format as an array
-    let arr = courseData['_fieldsProto']['core']['arrayValue']['values'];
-    arr = arr.map(e => e['stringValue']);
-    console.log(arr);
-    majorReqs = arr;
-  }
+    // For each major the student is in, get the major requirements.
+    for(let major of majors) {
+        let doc = db.collection('majors').doc(major);
+        let courseData = await doc.get();
 
-  // Do the same for general engineering reqs
+        console.log("courseData:", courseData);
 
-  doc = db.collection('majors').doc('GenEngineer');
-  courseData = await doc.get();
+        if (!courseData.exists) {
+            console.error(`ERROR: ${major} does not exist in the DB.`);
+            res.send(500); // Internal server error
+            return;
+        }
+        else {
+            // Get each course code.
+            let arr = courseData._fieldsProto.core.arrayValue.values;
+            arr = arr.map(e => e.stringValue);
 
-  if (!courseData.exists) {
-    console.log(`ERROR: ${major} does not exist in the DB.`);
-  }
-  else {
-    // Format as an array
-    let arr = courseData['_fieldsProto']['core']['arrayValue']['values'];
-    arr = arr.map(e => e['stringValue']);
-    console.log(arr);
-    genReqs = arr;
-  }
+            all_reqs.push(...arr); // Spread operator (...) Adds arr (an array) to total_reqs element-wise
+        }
+    }
 
-  console.log('>>>\tmajorReqs:', majorReqs);
-  console.log('>>>\tgenReqs:', genReqs);
+    console.log("Getting course info for:", all_reqs);
+    let reqs = await Promise.all(all_reqs.map(async e => await process_course(e)));
 
-  // put them into one array.
-  let reqs = [];
-  for (let e of majorReqs) {
-    console.log('Processing course:', e);
-    reqs.push(await process_course(e));
-  }
+    console.log('Requirement information collected successfully.');
 
-  for (let e of genReqs) {
-    console.log('Processing course:', e);
-    reqs.push(await process_course(e));
-  }
+    res.send(reqs);
 
-  res.send(reqs);
+    console.groupEnd(); // Unindents
 }
 
 const build_semester = function (req, res) {
-  let major = req.params.major;
-  let { takenClasses, majorReqs } = req.body;
+    let major = req.params.major;
+    let { takenClasses, majorReqs } = req.body;
 
-  // Run the flow
-  let results = runFlow(major, takenClasses, majorReqs);
-  console.log('============================================')
-  console.log('results:', results);
+    // Run the flow
+    let results = runFlow(major, takenClasses, majorReqs);
+    console.log('============================================')
+    console.log('results:', results);
 
-  res.send(results);
+    res.send(results);
 }
 
 /**
@@ -84,13 +70,13 @@ const build_semester = function (req, res) {
 // }
 
 const getCourseInfo = async (req, res) => {
-  console.group();
-  let course_code = req.params.courseCode;
-  console.log('Fetching course code info for', course_code);
+    console.group();
+    let course_code = req.params.courseCode;
+    console.log('Fetching course code info for', course_code);
 
-  const data = __getCourseInfo(course_code);
-  
-  res.send(data);
+    const data = __getCourseInfo(course_code);
+
+    res.send(data);
 }
 
 
@@ -102,17 +88,17 @@ const getCourseInfo = async (req, res) => {
  */
 const testDB = async function (req, res) {
 
-  let major = 'ChemE';
-  const doc = db.collection('majors').doc(major);
-  const info = await doc.get();
+    let major = 'ChemE';
+    const doc = db.collection('majors').doc(major);
+    const info = await doc.get();
 
-  if (!info.exists) {
-    console.log(`ERROR: ${major} does not exist in the DB.`);
-    res.send(404);
-  }
-  else {
-    res.send(info);
-  }
+    if (!info.exists) {
+        console.log(`ERROR: ${major} does not exist in the DB.`);
+        res.send(404);
+    }
+    else {
+        res.send(info);
+    }
 }
 
 /**
@@ -120,26 +106,26 @@ const testDB = async function (req, res) {
  * TODO Unused at the moment
  */
 const getReqs = async function (req, res) {
-  const major = req.params.major;
-  const doc = db.collection('majors').doc(major);
-  const courseData = await doc.get();
+    const major = req.params.major;
+    const doc = db.collection('majors').doc(major);
+    const courseData = await doc.get();
 
-  if (!courseData.exists) {
-    console.log(`ERROR: ${major} does not exist in the DB.`);
-    res.send(`ERROR: ${major} does not exist in the DB.`);
-  }
-  else {
-    // Format as an array
-    let arr = courseData['_fieldsProto']['core']['arrayValue']['values'];
-    arr = arr.map(e => e['stringValue']);
-    console.log(arr);
-    res.send(arr);
-  }
+    if (!courseData.exists) {
+        console.log(`ERROR: ${major} does not exist in the DB.`);
+        res.send(`ERROR: ${major} does not exist in the DB.`);
+    }
+    else {
+        // Format as an array
+        let arr = courseData['_fieldsProto']['core']['arrayValue']['values'];
+        arr = arr.map(e => e['stringValue']);
+        console.log(arr);
+        res.send(arr);
+    }
 }
 
 export {
-  retrieveRequirements,
-  build_semester,
-  getCourseInfo,
-  testDB
+    retrieveRequirements,
+    build_semester,
+    getCourseInfo,
+    testDB
 };
