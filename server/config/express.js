@@ -2,10 +2,11 @@ import path from 'path';
 import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+
 import router from '../routes/routes.js';
 
-export default function() {
-    // initialize app
+export default function () {
+    // Initialize app
     const app = express();
 
     // enable request logging for development debugging

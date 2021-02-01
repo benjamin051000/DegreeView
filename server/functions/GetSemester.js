@@ -24,7 +24,7 @@ function parse_req(pre_str) {
 async function process_course(course_code) {
     let course_info = await get_course(course_code);
     var remove = ["AP credit for MAC 2311", "with a minimum grade of C", "(", ") ", "or a passing score on Chem placement plus no attempt of CHM 1025 w/grade <C or W, and MAC 1147, or MAC 1140 plus MAC 1114, or higher MAC course with a minimum grade of C.", "or (MAC 1140 and MAC 1114or MAC 23##)"]
-    
+
     var course = course_info[0]["COURSES"][0];
     //console.log(course_code)
     //console.log(course['prerequisites'])
