@@ -75,16 +75,19 @@ const build_semester = (req, res) => {
  * Uses the ONE.UF API to retrieve information about a particular course.
  * @param {object} req - Pass the course code as a request parameter.
  * @param {object} res - Sends response with course info.
+ * NOTE: Currently unused.
  */
-const getCourseInfo = (req, res) => {
-    let course_code = req.params.courseCode;
+// const getCourseInfo = (req, res) => {
+//     let course_code = req.params.courseCode;
     
-    console.log('Fetching course code info for:', course_code);
+//     console.log('Fetching course code info for:', course_code);
 
-    const data = __getCourseInfo(course_code);
+//     const data = __getCourseInfo(course_code);
 
-    res.send(data);
-}
+//     console.log('yee');
+
+//     res.send(data);
+// }
 
 
 /**
@@ -110,6 +113,6 @@ const testDB = async (_, res) => {
 export {
     retrieveRequirements,
     build_semester,
-    getCourseInfo,
+    // getCourseInfo,
     testDB
 };
