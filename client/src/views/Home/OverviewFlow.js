@@ -2,8 +2,6 @@ import React, { useState, useCallback, useEffect } from 'react';
 import ReactFlow, {
   removeElements,
   addEdge,
-  ReactFlowProvider,
-  Background
 } from 'react-flow-renderer';
 
 const flowKey = 'example-flow';
@@ -29,8 +27,7 @@ const nodeTypes = {
 
 const OverviewFlow = ({ nodes, setNodes }) => {
   const [rfInstance, setRfInstance] = useState(null);
-
-
+  
   const onElementsRemove = (elementsToRemove) =>
     setNodes((els) => removeElements(elementsToRemove, els));
 
@@ -95,23 +92,21 @@ const OverviewFlow = ({ nodes, setNodes }) => {
     if (rfInstance) {
       let flow = rfInstance.toObject();
       flow = prereqUpdate(flow);
-      flow = gridUpdate(flow);
+      //flow = gridUpdate(flow);
       localStorage.setItem(flowKey, JSON.stringify(flow));
     }
   };
 
   //ON RESTORE
   const onRestore = () => {
-    console.log("in console log 1")
     const flow = JSON.parse(localStorage.getItem(flowKey));
     if (flow) {
       const [x = 0, y = 0] = flow.position;
-      console.log("in console log 2")
       setNodes(flow.elements || []);
     }
   };
 
-  const UpdateNodes = (node) => {
+  const UpdateNodes = () => {
     onSave();
     onRestore();
   }
