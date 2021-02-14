@@ -5,12 +5,17 @@ import CourseSidebar from '../../components/CourseSidebar.js';
 import makeNode from './MakeElement.js';
 import updateNodes from './OverviewFlow.js'
 
+// Load environment variable configuration for API hostnames
+const ENV_HOSTNAME = "http://localhost:5000"; //process.env.REACT_APP_API_HOST;
+console.log("ENV_HOSTNAME:", ENV_HOSTNAME);
+
+
 /**
  * Retrieves course information via the backend API endpoint.
  * @param {string} courseCode - code of the course (e.g. MAC2312).
  */
 async function getCourseInfo(courseCode) {
-    const response = await fetch(`/api/getCourseInfo/${courseCode}`);
+    const response = await fetch(`${ENV_HOSTNAME}/api/getCourseInfo/${courseCode}`);
     const data = await response.json();
     // console.log("Data from backend:", data);
     return data[0]; // ONE.UF returns this in an array.
@@ -28,7 +33,7 @@ async function getSemester(major, takenClasses) {
         headers: { 'Content-Type': 'application/json' }
     }
 
-    const url = `/api/buildsemester/${major}`;
+    const url = `${ENV_HOSTNAME}/api/buildsemester/${major}`;
 
     let response = await fetch(url, options);
     let data = await response.json();
@@ -54,7 +59,7 @@ async function getSemester(major, takenClasses) {
 let requirementsLoaded = false;
 let majorReqs = [];
 async function getRequirements(major) {
-    let response = await fetch(`/api/getReqs/${major}`);
+    let response = await fetch(`${ENV_HOSTNAME}/api/getReqs/${major}`);
     let data = await response.json();
     
     requirementsLoaded = true;

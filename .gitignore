@@ -58,3 +58,6 @@ client/.vscode/launch.json
 
 # Private key
 server/config/SwampHacks 2021-af160589d296.json
+
+# Environment variables file
+.env

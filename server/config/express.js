@@ -12,6 +12,13 @@ export default function () {
     // enable request logging for development debugging
     app.use(morgan('dev'));
 
+    // Allow CORS requests (this is necessary because the frontend sends a fetch to the entire URL, which no longer uses a proxy)
+    app.use(function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
+
     // body parsing middleware
     app.use(bodyParser.json());
 

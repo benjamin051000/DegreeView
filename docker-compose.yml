@@ -1,0 +1,18 @@
+version: '3'
+services:
+  frontend:
+    build: client
+
+    ports:
+      - "3000:3000"
+
+    # environment:
+    #   - REACT_APP_API_HOST=http://backend:5000
+
+    depends_on:
+      - backend
+  
+  backend:
+    build: .
+    ports:
+      - "5000:5000"
